@@ -1,15 +1,16 @@
-const Blog = require('../models/blog')
+const router = require('express').Router()
 
-const blogsRouter = require('express').Router()
+const { Blog } = require('../models/')
+const { blogFinder } = require('../util/middleware')
 
-blogsRouter.get('/', async(req, res) => {
+router.get('/', async(req, res) => {
   // const blogs =  await sequelize.query('select * from blogs', { type: QueryTypes.SELECT })
   const blogs = await Blog.findAll()
   res.json(blogs)
 })
 
-blogsRouter.get('/:id', async(req, res) => {
-  const blog = await Blog.findByPk(req.params.id)
+router.get('/:id', blogFinder, async(req, res) => {
+  const blog = req.blog
   if (blog) {
     res.json(blog)
   } else {
@@ -19,22 +20,27 @@ blogsRouter.get('/:id', async(req, res) => {
   }
 })
 
-blogsRouter.post('/', async(req, res) => {
+router.post('/', async(req, res) => {
   console.log('the req.body', req.body)
   const blog  = await Blog.create(req.body)
   res.json(blog)
   res.end()
 })
 
-blogsRouter.delete('/:id', async(req, res) => {
-  const blogToDelete = await Blog.findByPk(req.params.id)
-  if (blogToDelete) {
-    await blogToDelete.destroy()
-    return res.status(204).end()
-  } 
-  return res.status(404).send({ error: 'Id to delete is not found!' })
+router.delete('/:id', blogFinder, async(req, res) => {
+  const blogToDelete = req.blog
+  try {
+    if (blogToDelete) {
+      await blogToDelete.destroy()
+      res.status(204).end()
+      return 
+    }
+  } catch(error) {
+    res.status(400).send({ error: 'bad requrest' + error })
+  }
+  res.status(404).send({ error: 'Id to delete is not found!' })
 })
 
-module.exports = blogsRouter
+module.exports = router
 
 

@@ -2,7 +2,8 @@ POST http://localhost:3001/api/blogs
 content-type: application/json
 
 {
- "author": "mind cafe 2", 
- "url": "https://medium.com/mind-cafe", 
- "title": "mind cafe 2"
+ "author": "mind cafe 2 good", 
+ "url": "https://medium.com/mind-cafe",
+ "title": "mind is good"
 }
+

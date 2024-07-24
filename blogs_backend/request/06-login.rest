@@ -1,0 +1,25 @@
+@baseUrl = http://localhost:3001
+
+
+# @name login
+POST {{baseUrl}}/api/login HTTP/1.1
+content-type: application/json
+
+{
+ "username": "bom3", 
+ "password": "secret"
+}
+
+###
+
+@authToken = {{login.response.token}
+
+# @name createComment
+POST {{baseUrl}}/api/notes HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+ "content": "mind cafe 666", 
+ "important": true
+}

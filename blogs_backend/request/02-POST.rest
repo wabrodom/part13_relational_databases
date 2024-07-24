@@ -1,9 +1,11 @@
-POST http://localhost:3001/api/blogs
+@baseUrl = http://localhost:3001
+
+
+# @name login
+POST {{baseUrl}}/api/login HTTP/1.1
 content-type: application/json
 
 {
- "author": "mind cafe 2 good", 
- "url": "https://medium.com/mind-cafe",
- "title": "mind is good"
+ "username": "bombom2", 
+ "password": "secret2"
 }
-

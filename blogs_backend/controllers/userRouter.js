@@ -7,6 +7,11 @@ const {tokenExtractor} = require('../util/middleware')
 router.get('/', async (req, res) => {
   const users = await User.findAll({
     attributes: { exclude: ['passwordHash', 'id'] },
+    include: { 
+      model: Blog, 
+      attributes: { exclude: ['userId', 'id'] },
+      // attributes: ['author', 'url', 'title', 'likes'],
+    }
   })
   res.json(users)
 })

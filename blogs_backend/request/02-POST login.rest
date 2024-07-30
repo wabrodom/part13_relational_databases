@@ -6,12 +6,11 @@ POST {{baseUrl}}/api/login HTTP/1.1
 content-type: application/json
 
 {
- "username": "bom3", 
+ "username": "bomgogo345", 
  "password": "secret"
 }
 
 ###
-
 @authToken = {{login.response.token}
 
 # @name createComment
@@ -20,6 +19,7 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
- "content": "mind cafe 666", 
- "important": true
+ "author": "mind cafe 666", 
+ "url": "http://bing.com",
+ "title": "bing"
 }

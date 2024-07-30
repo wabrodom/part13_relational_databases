@@ -47,9 +47,7 @@ router.post('/', async(req, res, next) => {
     }
 
     const blog  = await Blog.create({ author, url, title })
-    res.json(blog)
-    res.end()
-
+    res.status(201).json(blog)
   } catch (error) {
     next(error)
   }

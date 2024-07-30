@@ -1,1 +1,7 @@
-DELETE http://localhost:3001/api/blogs/6
+@baseUrl = http://localhost:3001
+@deleteId = 5
+@authToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWJvbUBnbWFpbC5jb20iLCJpZCI6NSwiaWF0IjoxNzIyMzMyNDQ0LCJleHAiOjE3MjIzMzYwNDR9.Q5NQTbu5tEYRJrXhnXrY1hSUd7oF0ITI57BeLfUCWr4
+
+
+DELETE {{baseUrl}}/api/blogs/{{deleteId}} HTTP/1.1
+Authorization: Bearer {{authToken}}

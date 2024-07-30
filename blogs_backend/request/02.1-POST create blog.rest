@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3001
-@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWdvZ28zNDUiLCJpZCI6NCwiaWF0IjoxNzIyMzEwMTMwfQ.gDDehLzX1sn1o20RPLYLYitpxGA37ljT43ZR4mYc-Eo
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWJvbUBnbWFpbC5jb20iLCJpZCI6NSwiaWF0IjoxNzIyMzMwOTAzLCJleHAiOjE3MjIzMzQ1MDN9.UMANsukP8HDDWb7bbjvW32xRGUH13_WJHdSuWV-7D_g
 
 
 POST {{baseUrl}}/api/blogs HTTP/1.1
@@ -7,7 +7,7 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
- "author": "microsoft", 
+ "author": "microsoft bom5", 
  "url": "http://bing.com",
  "title": "bing"
 }

@@ -1,31 +1,33 @@
 const router = require('express').Router()
 const crypto = require('crypto');
 const { bcrypt } = require('hash-wasm') 
-const jwt = require('jsonwebtoken')
-const { SECRET } = require('../util/config')
-
-const { User } = require('../models')
-
-const tokenExtractor = (req, res, next) => {  
-  const authorization = req.get('authorization')  
-  console.log(authorization, '----------------------------')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {    
-    try {      
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)    
-    } catch{      
-      return res.status(401).json({ error: 'token invalid' })    
-    } 
-
-  }  else {    
-    return res.status(401).json({ error: 'token missing' })  
-  }  next()
-}
+const { User, Blog } = require('../models')
+const {tokenExtractor} = require('../util/middleware')
 
 router.get('/', async (req, res) => {
   const users = await User.findAll({
     attributes: { exclude: ['passwordHash', 'id'] },
   })
   res.json(users)
+})
+
+// define the specific route before dynamics routes
+router.get('/currentuser', tokenExtractor, async(req, res, next) => {
+  try {
+    console.log('.------decodedToken---------', req.decodedToken)
+    const { id } = req.decodedToken
+  
+    const loadCurrentUser = await User.findByPk(id, {
+      attributes: { exclude: ['passwordHash', 'id'] },
+      include: {
+        model: Blog
+      }
+    })
+   
+    res.json(loadCurrentUser)
+  } catch(error) {
+    next(error)
+  }
 })
 
 router.get('/:id', async (req, res) => {

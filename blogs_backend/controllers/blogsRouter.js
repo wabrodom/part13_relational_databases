@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
-const { Blog } = require('../models/')
-const { blogFinder } = require('../util/middleware')
+const { Blog, User } = require('../models/')
+const { blogFinder, tokenExtractor } = require('../util/middleware')
 
 router.get('/', async(req, res, next) => {
   try {
@@ -29,7 +29,7 @@ router.get('/:id', blogFinder, async(req, res, next) => {
   }
 })
 
-router.post('/', async(req, res, next) => {
+router.post('/', tokenExtractor, async(req, res, next) => {
   const { author, url, title } = req.body
   
   try {
@@ -46,7 +46,8 @@ router.post('/', async(req, res, next) => {
       throw new TypeError("invalid type of args")
     }
 
-    const blog  = await Blog.create({ author, url, title })
+    const user = await User.findByPk(req.decodedToken.id)
+    const blog  = await Blog.create({ author, url, title, userId: user.id })  //sequelize agc.userId  
     res.status(201).json(blog)
   } catch (error) {
     next(error)

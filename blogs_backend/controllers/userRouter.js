@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const crypto = require('crypto');
+const crypto = require('crypto')
 const { bcrypt } = require('hash-wasm') 
 const { User, Blog } = require('../models')
 const {tokenExtractor} = require('../util/middleware')
@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
     include: { 
       model: Blog, 
       attributes: { exclude: ['userId', 'id'] },
-      // attributes: ['author', 'url', 'title', 'likes'],
     }
   })
   res.json(users)
@@ -104,3 +103,11 @@ router.put('/:username', tokenExtractor, async(req, res, next) => {
 
 
 module.exports = router
+
+
+/*
+  attributes: { exclude: ['userId', 'id'] },
+  vs
+  attributes: ['author', 'url', 'title', 'likes'],
+
+*/

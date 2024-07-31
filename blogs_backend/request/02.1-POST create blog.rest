@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3001
-@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWJvbUBnbWFpbC5jb20iLCJpZCI6NSwiaWF0IjoxNzIyMzMwOTAzLCJleHAiOjE3MjIzMzQ1MDN9.UMANsukP8HDDWb7bbjvW32xRGUH13_WJHdSuWV-7D_g
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWJvbUBnbWFpbC5jb20iLCJpZCI6NSwiaWF0IjoxNzIyNDAwOTAyLCJleHAiOjE3MjI0MDQ1MDJ9.FLVR_6-zs5o4U-_uoUiebuxGCTSia3lEGu0T0XQlAZo
 
 
 POST {{baseUrl}}/api/blogs HTTP/1.1
@@ -7,7 +7,7 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
- "author": "microsoft bom5", 
- "url": "http://bing.com",
- "title": "bing"
+ "author": "react bom5", 
+ "url": "https://react.dev/",
+ "title": "React"
 }

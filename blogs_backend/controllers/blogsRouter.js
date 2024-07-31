@@ -4,10 +4,24 @@ const { Blog, User } = require('../models/')
 const { blogFinder, tokenExtractor } = require('../util/middleware')
 
 router.get('/', async(req, res, next) => {
-  const where = {}
+  // ?search=*   will search both title and author
+  let where = {}
+
   if (req.query.search) {
-    where.title = {
-      [Op.iLike]: `%${req.query.search}%`
+    const pattern = `%${req.query.search}%`
+    where = {
+      [Op.or]: [
+        {
+          title: {
+            [Op.iLike]: pattern
+          }
+        },
+        {
+          author: {
+            [Op.iLike]: pattern
+          }
+        },
+      ]
     }
   }
 

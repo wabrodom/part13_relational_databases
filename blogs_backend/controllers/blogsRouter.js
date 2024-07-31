@@ -2,6 +2,7 @@ const router = require('express').Router()
 const { Op } = require('sequelize')
 const { Blog, User } = require('../models/')
 const { blogFinder, tokenExtractor } = require('../util/middleware')
+const { sequelize } = require('../util/db')
 
 router.get('/', async(req, res, next) => {
   // ?search=*   will search both title and author
@@ -33,6 +34,9 @@ router.get('/', async(req, res, next) => {
         attributes: ['name']
       },
       where,
+      order: [
+        ['likes', 'DESC'],
+      ],
     })
     res.json(blogs)
 

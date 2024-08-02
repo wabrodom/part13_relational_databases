@@ -62,14 +62,14 @@ router.get('/:id', blogFinder, async(req, res, next) => {
 })
 
 router.post('/', tokenExtractor, async(req, res, next) => {
-  const { author, url, title } = req.body
+  const { author, url, title, year } = req.body
   
   try {
     if (typeof author === 'undefined' ||
         typeof url === 'undefined' ||
         typeof title === 'undefined'
     ) {
-      throw new ReferenceError ("some field of args not provided")
+      throw new ReferenceError ("some required field of args not provided")
     }
     if (typeof author !== 'string' ||
         typeof url !== 'string' ||
@@ -79,7 +79,11 @@ router.post('/', tokenExtractor, async(req, res, next) => {
     }
 
     const user = await User.findByPk(req.decodedToken.id)
-    const blog  = await Blog.create({ author, url, title, userId: user.id })  //sequelize agc.userId  
+    const blog  = await Blog.create({ 
+      author, url, title, 
+      userId: user.id,  //sequelize args.userId  
+      year: year
+    })  
     res.status(201).json(blog)
   } catch (error) {
     next(error)

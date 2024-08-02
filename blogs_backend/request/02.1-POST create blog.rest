@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3001
-@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWJvbUBnbWFpbC5jb20iLCJpZCI6NSwiaWF0IjoxNzIyNDAwOTAyLCJleHAiOjE3MjI0MDQ1MDJ9.FLVR_6-zs5o4U-_uoUiebuxGCTSia3lEGu0T0XQlAZo
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWJvbUBnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNzIyNTgwNDIyLCJleHAiOjE3MjI1ODQwMjJ9.yyqrVTGvXgHAVT4WksIfnvJs6M8Is9gUKktKKHQRsN8
 
 
 POST {{baseUrl}}/api/blogs HTTP/1.1
@@ -9,5 +9,6 @@ Content-Type: application/json
 {
  "author": "react bom5", 
  "url": "https://react.dev/",
- "title": "React"
+ "title": "React",
+ "year": 1990
 }

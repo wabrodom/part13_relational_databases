@@ -25,11 +25,22 @@ Blog.init(
   likes: {
     type: DataTypes.INTEGER,
     defaultValue: 0
+  },
+  year: {
+    type: DataTypes.INTEGER,
+    validate: {
+      possibleYear(value) {
+        const currentYear = new Date().getFullYear()
+        if (value < 1991 || value > currentYear ) {
+          throw new Error(`year should be in range 1991-${currentYear}.`)
+        }
+      },
+    }
   }
   },{  
     sequelize,  
     underscored: true,  
-    timestamps: false,  
+    timestamps: true,  
     modelName: 'blog' 
 })
 

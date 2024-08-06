@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const crypto = require('crypto')
 const { bcrypt } = require('hash-wasm') 
-const { User, Blog } = require('../models')
+const { User, Blog, UserBlogs } = require('../models')
 const {tokenExtractor} = require('../util/middleware')
 
 router.get('/', async (req, res) => {
@@ -35,7 +35,23 @@ router.get('/currentuser', tokenExtractor, async(req, res, next) => {
 })
 
 router.get('/:id', async (req, res) => {
-  const user = await User.findByPk(req.params.id)
+  const user = await User.findByPk(req.params.id, {
+    include: [
+      {
+        model: Blog,
+        attributes: { exclude: ['userId']},
+      },
+      {
+        model: Blog,
+        as: 'readingBlogs', 
+        attributes: { exclude: ['userId']},
+        through: {
+          attributes: ["readingState"]
+        }
+      }
+    ]
+  })
+
   if (user) {
     res.json(user)
   } else {

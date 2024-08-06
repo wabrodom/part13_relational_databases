@@ -6,7 +6,7 @@ POST {{baseUrl}}/api/login HTTP/1.1
 content-type: application/json
 
 {
- "username": "bombom@gmail.com", 
+ "username": "john@gmail.com", 
  "password": "secret1"
 }
 
@@ -23,3 +23,15 @@ Content-Type: application/json
  "url": "http://bing.com",
  "title": "bing"
 }
+
+
+{
+ "username": "bombom@gmail.com", 
+ "password": "secret1"
+}
+
+{
+ "username": "john@gmail.com", 
+ "password": "secret1"
+}
+

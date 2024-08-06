@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3001
-@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWJvbUBnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNzIyNTgwNDIyLCJleHAiOjE3MjI1ODQwMjJ9.yyqrVTGvXgHAVT4WksIfnvJs6M8Is9gUKktKKHQRsN8
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5AZ21haWwuY29tIiwiaWQiOjMsImlhdCI6MTcyMjg0NTQ0MywiZXhwIjoxNzIyODQ5MDQzfQ.mFLg1x0x6awjmDioOr_q7tUUWr34BY6RT8ZCbJqe_bQ
 
 
 POST {{baseUrl}}/api/blogs HTTP/1.1
@@ -7,8 +7,8 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
- "author": "react bom5", 
+ "author": "Kind john 4", 
  "url": "https://react.dev/",
  "title": "React",
- "year": 1990
+ "year": 1998
 }

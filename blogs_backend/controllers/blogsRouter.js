@@ -45,9 +45,18 @@ router.get('/', async(req, res, next) => {
   }
 })
 
-router.get('/:id', blogFinder, async(req, res, next) => {
+router.get('/:id', async(req, res, next) => {
   try {
-    const blog = req.blog
+    const blog = await Blog.findByPk(req.params.id, {
+      include: {
+        model: User,
+        as: 'users_marked',
+        attributes:['name'],
+        through: {
+          attributes: ["readingState"]
+        }
+      }
+    })
     if (blog) {
       res.json(blog)
     } else {

@@ -36,6 +36,7 @@ router.get('/currentuser', tokenExtractor, async(req, res, next) => {
 
 router.get('/:id', async (req, res) => {
   const user = await User.findByPk(req.params.id, {
+    attributes: ['name', 'username'],
     include: [
       {
         model: Blog,
@@ -46,7 +47,7 @@ router.get('/:id', async (req, res) => {
         as: 'readingBlogs', 
         attributes: { exclude: ['userId']},
         through: {
-          attributes: ["readingState"]
+          attributes: ["readingState", 'id'],
         }
       }
     ]

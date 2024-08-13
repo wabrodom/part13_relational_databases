@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:3001
+@id = 4
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWJvbUBnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNzIzNTQ0NjI0LCJleHAiOjE3MjM1NDgyMjR9.nEABp2bnJUR2uF4Sdoz_eBjwNgpEUzwps4cqf99jTFA
+
+
+PUT {{baseUrl}}/api/readinglists/{{id}} HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "read": true
+}

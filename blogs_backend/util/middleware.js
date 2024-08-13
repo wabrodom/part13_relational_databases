@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('../util/config')
 const { Blog } = require( '../models/')
-
+const { userNotCreateThisList } = require('./errorMessages')
 
 const blogFinder = async(req, res, next) => {
   req.blog = await Blog.findByPk(req.params.id)
@@ -54,6 +54,11 @@ const errorHandler = (error, request, response, next) => {
   if(error.name === 'SequelizeValidationError') {
     return response.status(400).send(error.message)
   }
+  
+  if(error.message === userNotCreateThisList) {
+    return response.status(400).send(error.message)
+  }
+
   next(error)
 }
 

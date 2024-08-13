@@ -1,7 +1,16 @@
 const router = require('express').Router()
-const { Blog, UserBlogs } = require('../models/')
+const { Blog, UserBlogs, User } = require('../models/')
 const { tokenExtractor } = require('../util/middleware')
+const { userNotCreateThisList } = require('../util/errorMessages')
 
+router.get('/', async(req, res, next) => {
+  try {
+    const userBlogsReadingList = await UserBlogs.findAll()
+    res.json(userBlogsReadingList)
+  } catch(error) {
+    next(error)
+  }
+})
 
 router.post('/', tokenExtractor, async( req, res, next) => {
   const { blogId, userId } = req.body 
@@ -30,6 +39,33 @@ router.post('/', tokenExtractor, async( req, res, next) => {
   } catch(error) {
     next(error)
   }
+})
+
+router.put('/:id', tokenExtractor, async( req, res, next) => {
+  const { read } = req.body
+  const id = req.params.id
+  const currentUserId = req.decodedToken.id
+
+  if (typeof read === undefined) {
+    throw new ReferenceError ("read arg. is not provided")
+  }
+  if (typeof read !== 'boolean') {
+    throw new TypeError("read arg. is required boolean type")
+  }
+
+  try {
+    const foundUserBlogsRow = await UserBlogs.findByPk(id)
+    if (foundUserBlogsRow.userId !== currentUserId) {
+      throw new Error(userNotCreateThisList)
+    }
+
+    foundUserBlogsRow.readingState = read
+    await foundUserBlogsRow.save()
+    res.status(200).json(foundUserBlogsRow)
+  } catch(error) {
+    next(error)
+  }
+
 })
 
 module.exports = router

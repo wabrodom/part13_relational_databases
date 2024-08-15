@@ -34,30 +34,40 @@ router.get('/currentuser', tokenExtractor, async(req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res) => {
-  const user = await User.findByPk(req.params.id, {
-    attributes: ['name', 'username'],
-    include: [
-      {
-        model: Blog,
-        attributes: { exclude: ['userId']},
-      },
-      {
-        model: Blog,
-        as: 'readingBlogs', 
-        attributes: { exclude: ['userId']},
-        through: {
-          attributes: ["readingState", 'id'],
-        }
-      }
-    ]
-  })
+router.get('/:id', async (req, res, next) => {
+  const { read } = req.query
+  const where = {}
 
-  if (user) {
-    res.json(user)
-  } else {
-    res.status(404).end()
+  if (read) {
+    const readBoolean = read === 'true'
+    where.readingState = readBoolean
   }
+
+  try {
+    const user = await User.findByPk(req.params.id, {
+      attributes: [],
+      include: [
+        {
+          model: Blog,
+          as: 'readingBlogs', 
+          attributes: { exclude: ['userId']},
+          through: {
+            attributes: ["readingState", 'id'],
+            where,
+          }
+        }
+      ]
+    })
+
+    if (user) {
+      res.json(user)
+    } else {
+      res.status(404).end()
+    }
+  } catch(error) {
+    next(error)
+  }
+
 })
 
 router.post('/', async (req, res, next) => {
@@ -126,5 +136,34 @@ module.exports = router
   attributes: { exclude: ['userId', 'id'] },
   vs
   attributes: ['author', 'url', 'title', 'likes'],
+
+*/
+
+/* ex.13.21
+  router.get('/:id', async (req, res) => {
+    const user = await User.findByPk(req.params.id, {
+      attributes: ['name', 'username'],
+      include: [
+        {
+          model: Blog,
+          attributes: { exclude: ['userId']},
+        },
+        {
+          model: Blog,
+          as: 'readingBlogs', 
+          attributes: { exclude: ['userId']},
+          through: {
+            attributes: ["readingState", 'id'],
+          }
+        }
+      ]
+    })
+
+    if (user) {
+      res.json(user)
+    } else {
+      res.status(404).end()
+    }
+  })
 
 */

@@ -1,0 +1,6 @@
+@baseUrl = http://localhost:3001
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvbWJvbUBnbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNzIzNzczNTMzLCJleHAiOjE3MjM3NzcxMzN9.eLB_AdVltjQpoMaD9_53_5hxOwzGpkS7sGry3Vuqu-w
+
+
+DELETE  {{baseUrl}}/api/logout/ HTTP/1.1
+Authorization: Bearer {{authToken}}

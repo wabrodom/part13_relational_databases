@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('../util/config')
-const { Blog } = require( '../models/')
+const { Blog, Session } = require( '../models/')
 const { userNotCreateThisList } = require('./errorMessages')
 
 const blogFinder = async(req, res, next) => {
@@ -8,13 +8,20 @@ const blogFinder = async(req, res, next) => {
   next()
 }
 
-const tokenExtractor = (req, res, next) => {  
+const tokenExtractor = async (req, res, next) => {  
   const authorization = req.get('authorization')  
-  console.log(authorization, '----------------------------')
+
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {    
     try {      
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)    
-    } catch{      
+      const decodedToken = jwt.verify(authorization.substring(7), SECRET)
+
+      const currentSession = await Session.findOne({ where: { user_id: decodedToken.id }})
+      if(decodedToken.iat < currentSession.iat) {
+        return res.status(401).json({ error: 'unauthorized token is not latest' })    
+      }
+
+      req.decodedToken = decodedToken
+    } catch {      
       return res.status(401).json({ error: 'token invalid' })    
     } 
 

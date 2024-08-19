@@ -26,7 +26,11 @@ User.init({
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
+  admin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
 }, {
   sequelize,
   underscored: true,

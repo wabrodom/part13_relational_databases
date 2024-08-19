@@ -3,7 +3,7 @@ const { bcryptVerify } = require('hash-wasm')
 const router = require('express').Router()
 
 const { SECRET } = require('../util/config')
-const User = require('../models/user')
+const { User, Session } = require('../models/')
 
 router.post('/', async (request, response, next) => {
   const { username, password } = request.body
@@ -37,7 +37,16 @@ router.post('/', async (request, response, next) => {
     }
   
     const token = jwt.sign(userForToken, SECRET, { expiresIn: 60 * 60 })
-  
+    const { iat } = jwt.verify(token, SECRET)
+    const [userSession, createNow ] = await Session.findOrCreate({ 
+      where: { userId: user.id },
+      defaults: { iat },
+    })
+    if (!createNow) {
+      userSession.iat = iat
+      await userSession.save()
+    }
+    
     response
       .status(200)
       .send({ token })
